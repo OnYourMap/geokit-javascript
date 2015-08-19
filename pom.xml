@@ -1,0 +1,96 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.onyourmap.gis</groupId>
+	<artifactId>geokit-javascript</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>geokit-javascript</name>
+	<url>http://maven.apache.org</url>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			
+			<plugin>
+			    <groupId>ro.isdc.wro4j</groupId>  
+			    <artifactId>wro4j-maven-plugin</artifactId>
+			    <version>1.7.1</version>
+			    
+			    <executions>
+					<execution>
+						<id>jsmin</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<minimize>true</minimize>
+							<targetGroups>oym-geokit.min</targetGroups>
+							<wroManagerFactory>ro.isdc.wro.extensions.manager.standalone.GoogleStandaloneManagerFactory</wroManagerFactory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>jsdebug</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<minimize>false</minimize>
+							<targetGroups>oym-geokit</targetGroups>
+							<wroManagerFactory>ro.isdc.wro.maven.plugin.manager.factory.ConfigurableWroManagerFactory</wroManagerFactory>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<ignoreMissingResources>true</ignoreMissingResources>
+					<jsDestinationFolder>${basedir}/target/</jsDestinationFolder>
+					<contextFolder>${basedir}/src/</contextFolder>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+		
+		
+		<pluginManagement>
+			<plugins>
+			
+				<plugin>
+			        <groupId>org.eclipse.m2e</groupId>
+			        <artifactId>lifecycle-mapping</artifactId>
+			        <version>1.0.0</version>
+			        <configuration>
+			            <lifecycleMappingMetadata>
+			                <pluginExecutions>
+			                    <pluginExecution>
+			                        <pluginExecutionFilter>
+			                            <groupId>ro.isdc.wro4j</groupId>
+			                            <artifactId>wro4j-maven-plugin</artifactId>
+			                            <versionRange>[1.0,)</versionRange>
+			                            <goals>
+			                                <goal>run</goal>
+			                            </goals>
+			                        </pluginExecutionFilter>
+			                        <action>
+			                            <execute/>
+			                        </action>
+			                    </pluginExecution>
+			                </pluginExecutions>
+			            </lifecycleMappingMetadata>
+			        </configuration>
+			    </plugin>
+			    
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<dependencies>
+		
+	</dependencies>
+	
+</project>

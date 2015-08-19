@@ -1,0 +1,189 @@
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta charset="utf-8">
+	<title>OnYourMap Geokit Test page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+	
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
+	<link href='https://api.mapbox.com/mapbox.js/v2.2.1/mapbox.css' rel='stylesheet' />
+
+	<script type="text/javascript" src="../target/oym-geokit.js"></script>
+	<script type="text/javascript" src="./i18n/route-en.js"></script>
+
+	<style>
+	  body { margin:10; padding:10; }
+	  #map { position:absolute; top:10; left: 600px; width:600px; height: 400px;}
+	</style>
+
+</head>
+
+<body>
+	<div id="map"></div>
+	
+	<div style="display:block;">
+		<h3>Search places</h3>
+		<input id="searchBtn" type="button" value="test search places"  />
+		<div id="searchResults"></div>
+	</div>
+	<div>
+		<h3>Nearest places</h3>
+		<input id="nearestBtn" type="button" value="test nearest places" />
+		<div id="nearestResults"></div>
+	</div>
+
+	<div>
+		<h3>Get directions</h3>
+		<input id="routeBtn" type="button" value="test directions" />
+		<div id="routeResults"></div>
+	</div>
+
+	<script type="text/javascript">
+	    var OYM_URL = "";
+	    var OYM_TILE_FORMAT = "";
+	    var OYM_APP_KEY = "";
+	    
+	    var OYM_MAPPING_TEMPLATE = OYM_URL + "?f=m&ft=" + OYM_TILE_FORMAT + "&x={oymX}&y={oymY}&z={oymZ}&key={key}";
+
+	    var oymLayer = new co.oym.geokit.OYMLayer(OYM_MAPPING_TEMPLATE, {
+			subdomains: ['t1', 't2', 't3', 't4'],
+			key: OYM_APP_KEY,
+			attribution: '',
+			minZoom: 2,
+			maxZoom: 17
+		});
+	
+		L.mapbox.accessToken = '';
+		var map = L.mapbox.map('map', null, {
+			layers: [ oymLayer ],
+			center: [48.8, 2.2],
+			zoom: 9,
+			attributionControl: false}
+		);
+		
+		var geokit = new co.oym.geokit.WSClient(OYM_URL, OYM_APP_KEY);
+	
+		var markers = null;
+		
+		$('#searchBtn').click(function(event) {
+			var req = new co.oym.geokit.Place.SearchRequest();
+			req.address = "rivoli paris";
+			
+			geokit.PlaceWS.search(null, req, this, function(result) {
+				if (result.statusCode == "200") {
+					var searchResponse = result.data;
+					var buffer = "";
+					for (var i in searchResponse.places) {
+						buffer += "<span>" + searchResponse.places[i].description + "</span><br/>";
+					}
+					$('#searchResults').html(buffer);
+					
+					var testPlace = searchResponse.places[0];
+					map.panTo(testPlace.geometry.location);
+					map.setZoom(17);
+					
+					if (markers) {
+						map.removeLayer(markers);
+					}
+					markers = new L.FeatureGroup();
+					
+					var marker = L.marker([testPlace.geometry.location.lat, testPlace.geometry.location.lng]);
+					markers.addLayer(marker);
+					
+					map.addLayer(markers);
+					
+				} else {
+					alert("error");
+				}
+			})
+			
+			
+			return false;	
+		});
+
+		$('#nearestBtn').click(function(event) {
+
+			var req = new co.oym.geokit.Place.NearestRequest();
+			req.location = L.latLng(48.862226, 2.350303);
+			req.radius = 0;
+			req.maxResponses = 1;
+			
+			geokit.PlaceWS.nearest(null, req, this, function(result) {
+				if (result.statusCode == "200") {
+					var nearestResponse = result.data;
+					var buffer = "";
+					for (var i in nearestResponse.places) {
+						buffer += "<span>" + nearestResponse.places[i].description + "</span><br/>";
+					}
+					$('#nearestResults').html(buffer);
+
+					var testPlace = nearestResponse.places[0];
+					map.panTo(testPlace.geometry.location);
+					map.setZoom(17);
+					
+					if (markers) {
+						map.removeLayer(markers);
+					}
+					markers = new L.FeatureGroup();
+					
+					var marker = L.marker([testPlace.geometry.location.lat, testPlace.geometry.location.lng]);
+					markers.addLayer(marker);
+					
+					map.addLayer(markers);
+
+					
+				} else {
+					alert("error");
+				}
+			})
+			
+			
+			return false;	
+		});
+
+
+		$('#routeBtn').click(function(event) {
+
+			var req = new co.oym.geokit.Route.Request();
+			req.start = L.latLng(48.860854, 2.340819); // rivoli
+			req.end = L.latLng(48.862226, 2.350303); // sebastopol
+			req.transportMode = co.oym.geokit.Route.Constants.TM_PEDESTRIAN;
+			
+			geokit.RouteWS.directions(null, req, this, function(result) {
+				if (result.statusCode == "200") {
+					var routeResponse = result.data;
+					var routeUtility = new co.oym.geokit.Route.Utility();
+					var buffer = "";
+					for (var i in routeResponse.instructions) {
+						buffer += "<span>" + routeUtility.renderInstruction(routeResponse.instructions[i], "en") + "</span><br/>";
+					}
+					$('#routeResults').html(buffer);
+				
+					if (markers) {
+						map.removeLayer(markers);
+					}
+					markers = new L.FeatureGroup();
+
+					var polyline = L.polyline(routeResponse.positions, {color: 'blue'});
+					markers.addLayer(polyline);
+					
+					map.addLayer(markers);
+					map.fitBounds(markers.getBounds());
+					
+				} else {
+					alert("error");
+				}		
+			})
+			return false;	
+		});
+
+		
+	</script>
+
+</body>
+
+</html>
