@@ -91,7 +91,7 @@ var map = L.mapbox.map('map', null, {
 
 Using OnYourMap webservices for geocoding and routing is done through the object *co.oym.geokit.WSClient*. This class is initialised like this:
 
-```javacsript
+```javascript
 var geokit = new co.oym.geokit.WSClient(OYM_URL, OYM_APP_KEY);
 ```
 	
