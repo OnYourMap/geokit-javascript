@@ -134,6 +134,25 @@ All the parameters available for the request/response are described in the javad
 If the radius is 0, only the nearest place will be returned. Otherwise, everything in the radius will be returned.
 
 
+## Autocomplete
+
+Places suggests can be retrieved using *autocomplete* function.
+Note that a suggest does not contain any location coordinate (so that the result may need to be geocoded afterward).
+
+```javascript
+var req = new co.oym.geokit.Place.AutocompleteRequest();
+req.place = "rivo";
+
+geokit.PlaceWS.autocomplete(null, req, this, function(result) {
+	if (result.statusCode == "200") {
+        var autocompleteResponse = result.data; 
+	}
+});
+```
+
+All the parameters available for the request/response are described in the javadoc.
+
+
 ## Routing
 
 The function *directions* provides a route between two coordinates.

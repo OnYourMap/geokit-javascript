@@ -145,6 +145,66 @@ co.oym.geokit.Place.NearestResponse = function() {
 
 
 /**
+ * A Place Suggest request.
+ * 
+ * @memberOf co.oym.geokit.Place
+ */
+co.oym.geokit.Place.AutocompleteRequest = function() {
+
+	/** The maximum number of places **/
+	this.maxResponses = 10;
+
+	/** The address string to complete **/
+	this.place = null;
+
+	/** The server side profile id to rank suggests (sort/filtering) **/
+	this.profile = null;
+};
+
+
+/**
+ * A Place Suggest.
+ * 
+ * @memberOf co.oym.geokit.Place
+ */
+co.oym.geokit.Place.Suggest = function() {
+	
+	/** The suggested place as a string **/
+	this.place = null;
+	
+	/** The range of matching characters in the suggest place **/
+	this.range = null;
+	
+	/** The score of the suggested place **/
+	this.score = 0;
+
+	/** The type of suggested place **/
+	this.type = 0;
+};
+
+/**
+ * A Place Suggest response.
+ * 
+ * @memberOf co.oym.geokit.Place
+ */
+co.oym.geokit.Place.AutocompleteResponse = function() {
+	
+	/** The response time in milliseconds **/
+	this.time = 0;
+	
+	/** The number of places **/
+	this.totalHits = 0;
+	
+	/** The status of the response **/
+	this.status = null;
+	
+	/** The list of suggested places **/
+	this.suggests = null;
+
+};
+
+
+/**
  * Place Web Service allows to: <br>
  *  - Search for an address (and get its WGS84 coordinate) <br>
  *  - Get nearest address from a WGS84 coordinate <br>
@@ -175,5 +235,15 @@ co.oym.geokit.PlaceWS = function(url, appKey) {
 	this.nearest = function (appKey, request, context, callback) {
 		return co.oym.geokit.request(this._url + "/place/nearest", appKey || this._appKey, request, context, callback);
 	};
+	
+	/**
+	 * Get suggest address from autocomplete.
+	 * @param {String} appKey 
+	 * @param {co.oym.geokit.Place.AutocompleteRequest} autocomplete request 
+	 */
+	this.autocomplete = function (appKey, request, context, callback) {
+		return co.oym.geokit.request(this._url + "/place/autocomplete", appKey || this._appKey, request, context, callback);
+	};
+	
 };
 

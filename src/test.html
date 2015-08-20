@@ -35,7 +35,11 @@
 		<input id="nearestBtn" type="button" value="test nearest places" />
 		<div id="nearestResults"></div>
 	</div>
-
+	<div>
+		<h3>Autocomplete places</h3>
+		<input id="autocompleteBtn" type="button" value="test autocomplete places" />
+		<div id="autocompleteResults"></div>
+	</div>
 	<div>
 		<h3>Get directions</h3>
 		<input id="routeBtn" type="button" value="test directions" />
@@ -145,6 +149,33 @@
 			return false;	
 		});
 
+		$('#autocompleteBtn').click(function(event) {
+
+			var req = new co.oym.geokit.Place.AutocompleteRequest();
+			req.place = "rivo";
+			
+			geokit.PlaceWS.autocomplete(null, req, this, function(result) {
+				if (result.statusCode == "200") {
+					var autocompleteResponse = result.data;
+					var buffer = "";
+					for (var i in autocompleteResponse.suggests) {
+						buffer += "<span>" + autocompleteResponse.suggests[i].place + "</span><br/>";
+					}
+					$('#autocompleteResults').html(buffer);
+
+					if (markers) {
+						map.removeLayer(markers);
+					}
+					markers = new L.FeatureGroup();
+					
+				} else {
+					alert("error");
+				}
+			})
+			
+			
+			return false;	
+		});
 
 		$('#routeBtn').click(function(event) {
 
