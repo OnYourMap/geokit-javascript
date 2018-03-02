@@ -694,6 +694,7 @@ co.oym.geokit.Route.Resources.Keys = {
 		"instr_roundabout_exit_n9": "",
 		
 		"instr_ramp": "",
+		"instr_ramp_turn": "",
 		"instr_ramp_on_road": "",
 		"instr_ramp_toward": "",
 		
