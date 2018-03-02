@@ -88,7 +88,7 @@ co.oym.geokit.Route.Resources["en"] = {
 	// {2} = instr_ramp_toward  
 	"instr_ramp": "{0}{1}{2}",
 	"instr_ramp_on_road": "Prendre\u0020la\u0020bretelle\u0020pour\u0020rejoindre\u0020{0}",
-	"instr.ramp.turn": "{0}\u0020sur\u0020la\u0020bretelle",
+	"instr_ramp_turn": "{0}\u0020sur\u0020la\u0020bretelle",
 	"instr_ramp_toward": "\u0020vers\u0020{0}",
 
 	
