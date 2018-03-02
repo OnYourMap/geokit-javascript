@@ -80,13 +80,17 @@ co.oym.geokit.Route.Resources["en"] = {
 	"instr_roundabout_exit_n7": "7ème",
 	"instr_roundabout_exit_n8": "8ème",
 	"instr_roundabout_exit_n9": "9ème",
+
 	
 	// RAMP instruction: 
 	// {0} = instr_ramp_on_road, 
-	// {1} = instr_ramp_toward  
-	"instr_ramp": "{0}{1}",
+	// {1} = instr.ramp.turn (where {0} = instr.turn.x),
+	// {2} = instr_ramp_toward  
+	"instr_ramp": "{0}{1}{2}",
 	"instr_ramp_on_road": "Prendre\u0020la\u0020bretelle\u0020pour\u0020rejoindre\u0020{0}",
+	"instr.ramp.turn": "{0}\u0020sur\u0020la\u0020bretelle",
 	"instr_ramp_toward": "\u0020vers\u0020{0}",
+
 	
 	// MERGE instruction: 
 	// {0} = instr_merge_on_road (where {0} = instr_heading_x and {1} = road name),

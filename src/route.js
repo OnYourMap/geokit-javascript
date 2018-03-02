@@ -420,15 +420,21 @@ co.oym.geokit.Route.Utility = function() {
 		} else if (manType == "RAMP") {
 
 			var onto = (manBranch != null) ? this.decodeBranch(manBranch, res, R) : (manRd != null || manRdnr != null) ? this.decodeRoad(manRd, manRdnr, res, R) : "";
+			var turn = "";
+			if (onto == "") {
+				turn = (manHeading != null) ? this.decodeHeading2(manHeading, res, R) : "";
+			}
 			var toward = (manDir != null) ? this.decodeDirection(manDir, res, R) : "";
-
+			
 			// onto
 			var ontoMsg = onto != "" ? this.rebuild(res, R.instr_ramp_on_road, [onto]) : "";
+			// turn
+			var turnMsg = turn != "" ? this.rebuild(res, R.string.instr_ramp_turn, [turn]) : "";
 			// toward
 			var towardMsg = toward != "" ? this.rebuild(res, R.instr_ramp_toward, [toward]) : "";
 
-			// final: on_road + toward
-			return this.rebuild(res, R.instr_ramp, [ontoMsg, towardMsg]);
+			// final: on_road | turn + toward
+			return this.rebuild(res, R.instr_ramp, [ontoMsg, turnMsg, towardMsg]);
 
 
 		} else if (manType == "MERGE") {

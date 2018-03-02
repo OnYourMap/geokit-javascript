@@ -83,9 +83,11 @@ co.oym.geokit.Route.Resources["en"] = {
 	
 	// RAMP instruction: 
 	// {0} = instr_ramp_on_road, 
-	// {1} = instr_ramp_toward  
-	"instr_ramp": "{0}{1}",
+	// {1} = instr.ramp.turn (where {0} = instr.turn.x),
+	// {2} = instr_ramp_toward  
+	"instr_ramp": "{0}{1}{2}",
 	"instr_ramp_on_road": "Take\u0020the\u0020ramp\u0020onto\u0020{0}",
+	"instr.ramp.turn": "{0}\u0020onto\u0020the\u0020ramp",
 	"instr_ramp_toward": "\u0020toward\u0020{0}",
 	
 	// MERGE instruction: 
