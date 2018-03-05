@@ -429,7 +429,7 @@ co.oym.geokit.Route.Utility = function() {
 			// onto
 			var ontoMsg = onto != "" ? this.rebuild(res, R.instr_ramp_on_road, [onto]) : "";
 			// turn
-			var turnMsg = turn != "" ? this.rebuild(res, R.string.instr_ramp_turn, [turn]) : "";
+			var turnMsg = turn != "" ? this.rebuild(res, R.instr_ramp_turn, [turn]) : "";
 			// toward
 			var towardMsg = toward != "" ? this.rebuild(res, R.instr_ramp_toward, [toward]) : "";
 
@@ -473,7 +473,7 @@ co.oym.geokit.Route.Utility = function() {
 
 		} else if (manType == "EMBARK") {
 
-			var transportType = this.decodeTransportType2(adPtType, res, res, R) + (adPtName != null ? " " + adPtName : "");
+			var transportType = this.decodeTransportType2(adPtType, res, R) + (adPtName != null ? " " + adPtName : "");
 			var toward = (adPtDir != null) ? adPtDir : "";
 			var stop = (adPtStop != null) ? adPtStop : "";
 			var delay = (adPtDelay != null) ? this.renderTime2(adPtDelay, res) : "";
@@ -493,7 +493,7 @@ co.oym.geokit.Route.Utility = function() {
 
 		} else if (manType == "CHANGE") {
 
-			var transportType = this.decodeTransportType2(adPtType, res, res, R) + " " + adPtName;
+			var transportType = this.decodeTransportType2(adPtType, res, R) + " " + adPtName;
 			var toward = (adPtDir != null) ? adPtDir : "";
 			var stop = (adPtStop != null) ? adPtStop : "";
 			var delay = (adPtDelay != null) ? this.renderTime2(adPtDelay, res) : "";
