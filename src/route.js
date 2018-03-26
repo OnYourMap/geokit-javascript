@@ -151,8 +151,29 @@ co.oym.geokit.Route.Response = function() {
 	this.levels = [];
 };
 
+/**
+ * An isochrone request.
+ * 
+ * @memberOf co.oym.geokit.Route
+ */
+co.oym.geokit.Route.IsochroneRequest = function() {
 
+	/** The time in seconds of max route **/
+	this.time = null;
+	/** The origin as a L.LatLng from Mapbox sdk: https://www.mapbox.com/mapbox.js/api/v2.2.1/l-latlng/ **/
+	this.origin = null;
+};
 
+/**
+ * An isochrone response.
+ * 
+ * @memberOf co.oym.geokit.Route
+ */
+co.oym.geokit.Route.IsochroneResponse = function() {
+
+	/** The polygon of isochrone map as an array of L.LatLng from Mapbox sdk: https://www.mapbox.com/mapbox.js/api/v2.2.1/l-latlng/ **/
+	this.polygon = null;
+};
 
 /**
  * Route Web Service allows to: <br>
@@ -175,8 +196,15 @@ co.oym.geokit.RouteWS = function(url, appKey) {
 	this.directions = function(appKey, request, context, callback) {
 		return co.oym.geokit.request(this._url + "/route/directions", appKey || this._appKey, request, context, callback);
 	};
-
-
+	
+	/**
+	 * Isochrone route: Get the polygon containing all possible routes within provided max time.
+	 * @param {String} appKey 
+	 * @param {co.oym.geokit.Route.Request} route request 
+	 */
+	this.isochrone = function(appKey, request, context, callback) {
+		return co.oym.geokit.request(this._url + "/route/isochrone", appKey || this._appKey, request, context, callback);
+	};
 };
 
 /**
