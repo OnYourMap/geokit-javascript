@@ -177,6 +177,11 @@ co.oym.geokit.Route.IsochroneResponse = function() {
 
 	/** The polygon of isochrone map as an array of L.LatLng from Mapbox sdk: https://www.mapbox.com/mapbox.js/api/v2.2.1/l-latlng/ **/
 	this.polygon = null;
+	
+	/** A list of bitmask for each points in polygon list **/
+	this.level = null;
+
+	
 };
 
 /**
