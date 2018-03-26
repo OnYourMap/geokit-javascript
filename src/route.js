@@ -157,9 +157,13 @@ co.oym.geokit.Route.Response = function() {
  * @memberOf co.oym.geokit.Route
  */
 co.oym.geokit.Route.IsochroneRequest = function() {
+	
+	/** The transport mode: co.oym.geokit.Route.Constants.TM_PEDESTRIAN or co.oym.geokit.Route.Constants.TM_FASTEST_CAR **/
+	this.transportMode = co.oym.geokit.Route.Constants.TM_FASTEST_CAR;
 
 	/** The time in seconds of max route **/
 	this.time = null;
+	
 	/** The origin as a L.LatLng from Mapbox sdk: https://www.mapbox.com/mapbox.js/api/v2.2.1/l-latlng/ **/
 	this.origin = null;
 };
